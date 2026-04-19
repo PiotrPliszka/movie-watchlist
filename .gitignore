@@ -1,0 +1,47 @@
+# =========================
+# Backend (Django / Python)
+# =========================
+
+# Skompilowane pliki Pythona
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Środowisko wirtualne
+venv/
+env/
+.venv/
+
+# Baza danych (każdy programista powinien mieć swoją lokalną)
+db.sqlite3
+
+# Pliki wgrywane przez użytkowników (jeśli kiedyś dodasz)
+media/
+
+# Zmienne środowiskowe i sekrety (BARDZO WAŻNE!)
+.env
+*.env
+
+# =========================
+# Frontend (React / Node.js)
+# =========================
+
+# Zależności - to pobiera się przez "npm install"
+node_modules/
+
+# Skompilowana aplikacja gotowa na produkcję
+/build
+/dist
+
+# Logi z błędami NPM / Yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Systemowe i Edytory (VS Code, PyCharm, macOS)
+# =========================
+.DS_Store
+.vscode/
+.idea/
+*.swp
