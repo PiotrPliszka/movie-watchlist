@@ -28,6 +28,7 @@ media/
 
 # Zależności - to pobiera się przez "npm install"
 node_modules/
+.vite
 
 # Skompilowana aplikacja gotowa na produkcję
 /build
