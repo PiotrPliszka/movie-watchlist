@@ -1,11 +1,13 @@
 services:
-  test-backend:
+  backend:
     build: ./backend
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/app
-  test-frontend:
+    env_file:
+      - .env
+  frontend:
     build: ./frontend
     ports:
       - "5173:5173"
