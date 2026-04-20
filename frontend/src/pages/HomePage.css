@@ -1,0 +1,44 @@
+.container {
+  max-width: 1000px;
+  min-width: 100vh;
+  margin: 40px auto;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+a {
+  color: #94a3b8;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.main-content {
+  text-align: center;
+}
+
+.main-content h1 {
+  font-size: 38px;
+}
+
+.main-content p {
+  color: #94a3b8;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: #38bdf8;
+  color: black;
+}
