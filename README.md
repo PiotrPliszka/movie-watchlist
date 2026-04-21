@@ -1,46 +1,123 @@
-# 🎬 Movie Watchlist - Projekt Treningowy (React + Django REST)
+# Movie Watchlist
 
-## 📖 O projekcie
-Ten projekt to w pełni funkcjonalna aplikacja typu CRUD (Create, Read, Update, Delete) służąca do zarządzania osobistą listą filmów do obejrzenia. 
+A full-stack training project for managing a personal movie watchlist.
+Frontend is built with React + Vite, backend with Django REST Framework.
 
-Głównym celem powstania tej aplikacji jest praktyczna nauka integracji frontendu (React) z backendem (Django REST Framework) z pominięciem autoryzacji (logowania), co pozwala skupić się w 100% na przepływie danych i routingu.
+## Tech Stack
 
-## 🛠️ Technologie
-* **Frontend:** React, React Router v6, Axios
-* **Backend:** Python, Django, Django REST Framework
-* **Baza danych:** SQLite (domyślna dla Django)
+- Frontend: React 19, Vite, React Router, Axios
+- Backend: Django 6, Django REST Framework
+- Database: SQLite
+- Containerization: Docker, Docker Compose
 
-## ✨ Funkcjonalności
-* Wyświetlanie listy wszystkich filmów z bazy danych.
-* Dynamiczny routing – dedykowana podstrona ze szczegółami każdego filmu.
-* Formularz dodawania nowego tytułu do bazy.
-* Możliwość oznaczania filmu jako "Obejrzany" (aktualizacja danych).
-* Możliwość trwałego usunięcia filmu z bazy.
+## What You Can Do
 
----
+- Browse all movies
+- Open details for a selected movie
+- Add a new movie
+- Update and delete movie records through the API
 
-## 🗺️ Plan Działania (Roadmap)
+## Project Structure
 
-### Etap 1: Backend (Django REST Framework)
-- [ ] Zbudowanie modelu `Movie` (pola: `title`, `description`, `release_year`, `is_watched`).
-- [ ] Wykonanie migracji bazy danych (`makemigrations` i `migrate`).
-- [ ] Stworzenie `MovieSerializer` dla zamiany modelu na JSON.
-- [ ] Konfiguracja `ModelViewSet` w pliku `views.py` do obsługi operacji CRUD.
-- [ ] Podpięcie widoku pod `urls.py` przy użyciu routera DRF.
-- [ ] Ręczne przetestowanie API w przeglądarce pod adresem `http://localhost:8000/api/movies/`.
-- [ ] Skonfigurowanie biblioteki `django-cors-headers`, aby React mógł bezpiecznie łączyć się z API.
+```text
+movie-watchlist/
+|- backend/            # Django + DRF API
+|- frontend/           # React app
+|- docker-compose.yml  # Local container setup
+`- README.md
+```
 
-### Etap 2: Frontend (Szkielet i Routing w React)
-- [ ] Inicjalizacja projektu React i instalacja paczek: `npm install react-router-dom axios`.
-- [ ] Utworzenie pustych komponentów: `MoviesList`, `AddMovie`, `MovieDetails`.
-- [ ] Konfiguracja głównego routingu w `App.jsx` (trasy: `/`, `/add`, `/movie/:id`).
+## API Overview
 
-### Etap 3: Łączenie frontendu z API (Operacje CRUD)
-- [ ] **Read (Lista):** W `MoviesList` użycie `useEffect` i `axios.get` do pobrania filmów i wyświetlenia ich na ekranie.
-- [ ] **Nawigacja:** Dodanie linków `<Link>` przy każdym filmie, prowadzących do `/movie/:id`.
-- [ ] **Create (Dodawanie):** W `AddMovie` stworzenie formularza wysyłającego `axios.post` i użycie `useNavigate` do powrotu na listę.
-- [ ] **Read (Szczegóły):** W `MovieDetails` użycie `useParams` do pobrania ID z URL i `axios.get`, aby załadować detale jednego filmu.
-- [ ] **Update (Edycja):** Dodanie w szczegółach przycisku wywołującego `axios.patch`, który zmienia status `is_watched` na `True`.
-- [ ] **Delete (Usuwanie):** Dodanie przycisku wywołującego `axios.delete`, a następnie automatyczne wyrzucenie użytkownika na stronę główną (`useNavigate`).
+Base URL:
 
----
+```text
+http://localhost:8000/api/
+```
+
+Endpoints:
+
+- `GET /movies/` - list movies
+- `POST /movies/` - create movie
+- `GET /movies/<id>/` - movie details
+- `PUT /movies/<id>/` - full update
+- `PATCH /movies/<id>/` - partial update
+- `DELETE /movies/<id>/` - remove movie
+
+Movie model fields:
+
+- `title` (string, required)
+- `description` (text)
+- `release_year` (date, `YYYY-MM-DD`)
+- `is_watched` (boolean)
+
+## Frontend Routes
+
+- `/` - home page
+- `/movies` - movie list
+- `/movies/:id` - movie details
+- `/movies/add-movie` - add movie form
+
+## Quick Start (Docker)
+
+Requirements:
+
+- Docker
+- Docker Compose
+
+Run:
+
+```bash
+docker compose up --build
+```
+
+App URLs:
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8000/api/movies/`
+
+## Quick Start (Local Dev)
+
+### 1) Backend
+
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Create `.env` in project root (or update existing one):
+
+```env
+SECRET_KEY=your_secret_key_here
+```
+
+Run migrations and server:
+
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+### 2) Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Notes
+
+- Frontend API client points to `http://localhost:8000/api/` (`frontend/src/api/axios.js`).
+- If CORS issues appear in local setup, verify backend CORS settings.
+- Current focus of this project is API + routing practice, without auth.
+
+## Roadmap Ideas
+
+- Form validation and error UX improvements
+- Mark movie as watched directly from UI
+- Search, filters, and sorting
+- Pagination for large lists
+- Tests (frontend + backend)
