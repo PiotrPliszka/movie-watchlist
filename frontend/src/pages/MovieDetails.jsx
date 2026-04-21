@@ -33,12 +33,14 @@ export function MovieDetails() {
   return (
     <div className="movie-container">
       <div className="nav">
-        <div className="title">
-          <h1>{movieDetails.title}</h1>
-        </div>
-        <div className="btn">
-          <Link to={"/"}>Home</Link>
-          <Link to={"movies/"}>Movie List</Link>
+        <div className="top-row">
+          <div className="title">
+            <h1>{movieDetails.title}</h1>
+          </div>
+          <div className="btn">
+            <Link to={"/"}>Home</Link>
+            <Link to={"/movies"}>Movie List</Link>
+          </div>
         </div>
         <div className="meta">{movieDetails.release_year}</div>
         <div className="desc">{movieDetails.description}</div>

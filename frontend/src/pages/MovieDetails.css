@@ -33,10 +33,18 @@
   gap: 14px;
 }
 
+.movie-container .top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
 .movie-container .title {
   font-size: clamp(28px, 3.6vw, 46px);
   letter-spacing: -0.02em;
   margin: 0;
+  flex: 1;
 }
 
 .movie-container .title h1 {
@@ -49,15 +57,18 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 6px;
+  margin-top: 4px;
+  justify-content: flex-end;
 }
 
 .movie-container .btn a {
-  padding: 10px 14px;
+  padding: 10px 16px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   color: rgba(248, 250, 252, 0.92);
+  font-weight: 700;
+  letter-spacing: 0.02em;
   transition:
     transform 0.18s ease,
     background-color 0.18s ease,
@@ -106,5 +117,14 @@
   .movie-container {
     padding: 26px 18px 30px;
     border-radius: 22px;
+  }
+
+  .movie-container .top-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .movie-container .btn {
+    justify-content: flex-start;
   }
 }
