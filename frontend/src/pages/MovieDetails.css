@@ -1,0 +1,110 @@
+.movie-container {
+  width: min(920px, var(--page-width));
+  margin: 0 auto;
+  padding: 38px 40px 44px;
+  border-radius: 26px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.movie-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 280px at 20% 10%, rgba(56, 189, 248, 0.12), transparent 62%),
+    radial-gradient(620px 280px at 85% 10%, rgba(249, 115, 22, 0.12), transparent 62%),
+    radial-gradient(720px 340px at 50% 115%, rgba(251, 113, 133, 0.12), transparent 62%);
+  opacity: 0.95;
+}
+
+.movie-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.movie-container .nav {
+  display: grid;
+  gap: 14px;
+}
+
+.movie-container .title {
+  font-size: clamp(28px, 3.6vw, 46px);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.movie-container .title h1 {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.06;
+}
+
+.movie-container .btn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.movie-container .btn a {
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(248, 250, 252, 0.92);
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.movie-container .btn a:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(56, 189, 248, 0.22);
+}
+
+.movie-container .meta {
+  color: var(--muted);
+  margin-top: 6px;
+  margin-bottom: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.movie-container .meta::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.95), rgba(251, 113, 133, 0.95));
+}
+
+.movie-container .desc {
+  line-height: 1.6;
+  color: rgba(248, 250, 252, 0.9);
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+}
+
+@media (max-width: 640px) {
+  .movie-container {
+    padding: 26px 18px 30px;
+    border-radius: 22px;
+  }
+}
