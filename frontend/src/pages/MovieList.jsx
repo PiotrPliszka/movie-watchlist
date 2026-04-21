@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api/axios";
+import "./MovieList.css";
+import { Link, Links } from "react-router-dom";
 
 export function MovieList() {
   // dynamic data from database
@@ -13,7 +15,11 @@ export function MovieList() {
         console.log("Sukces:", response.data);
         setMovies(response.data);
       } catch (error) {
-        console.error(error);
+        if (error.response) {
+          console.error("Dane błędu: ", error.response.data);
+        } else {
+          console.log("Błąd ogólny: ", error.message);
+        }
       }
     }
 
@@ -22,12 +28,25 @@ export function MovieList() {
 
   return (
     <div className="movie-list-div">
-      <h1>MovieList</h1>
-      <ul>
+      <div className="nav">
+        <h1>
+          <Link to={"/"}>MovieList</Link>
+        </h1>
+        <Link to={"add-movie"} className="add-btn">
+          Add
+        </Link>
+      </div>
+
+      <div className="grid">
         {movies.map((item) => (
-          <li key={item.id}>{item.title}</li>
+          <Link key={item.id} to={`${item.id}`}>
+            <div className="card">
+              <div className="title">{item.title}</div>
+              <div className="meta">{item.release_year}</div>
+            </div>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

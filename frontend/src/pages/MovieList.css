@@ -1,0 +1,68 @@
+.movie-list-div {
+  max-width: 1000px;
+  min-width: 100vh;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 1rem;
+  color: white;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.add-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.meta {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
