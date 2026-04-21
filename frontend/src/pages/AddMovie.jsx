@@ -21,7 +21,6 @@ export function AddMovie() {
         <input
           type="text"
           className="date-input"
-          placeholder="YYYY-MM-DD"
           inputMode="numeric"
           pattern="\d{4}-\d{2}-\d{2}"
           title="Format: YYYY-MM-DD"
