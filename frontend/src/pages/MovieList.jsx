@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../api/axios";
 import "./MovieList.css";
-import { Link, Links } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function MovieList() {
   // dynamic data from database
@@ -26,6 +26,22 @@ export function MovieList() {
     fetchData();
   }, []);
 
+  async function deleteMovie(id) {
+    try {
+      const response = await api.delete(`movies/${id}/`);
+      console.log("Sukces: ", response.data);
+
+      const refresh = movies.filter((movie) => movie.id != id);
+      setMovies(refresh);
+    } catch (error) {
+      if (error.response) {
+        console.error(error.response.data);
+      } else {
+        console.error(error.message);
+      }
+    }
+  }
+
   return (
     <div className="movie-list-div">
       <div className="nav">
@@ -37,14 +53,44 @@ export function MovieList() {
         </Link>
       </div>
 
+      <div className="list-header">
+        <div>
+          <p className="eyebrow">Library</p>
+          <h2>Your movies</h2>
+        </div>
+        <div className="movie-count">{movies.length} titles</div>
+      </div>
+
       <div className="grid">
         {movies.map((item) => (
-          <Link key={item.id} to={`${item.id}`}>
-            <div className="card">
-              <div className="title">{item.title}</div>
-              <div className="meta">{item.release_year}</div>
+          <article className="card" key={item.id}>
+            <Link to={`${item.id}`} className="card-link">
+              <div className="data">
+                <div className="title">{item.title}</div>
+                <div className="meta">
+                  <span>{item.release_year}</span>
+                  <span
+                    className={
+                      item.is_watched ? "status watched" : "status pending"
+                    }
+                  >
+                    {item.is_watched ? "Watched" : "To watch"}
+                  </span>
+                </div>
+              </div>
+            </Link>
+            <div className="card-actions">
+              <button
+                className="del-btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteMovie(item.id);
+                }}
+              >
+                🗑️
+              </button>
             </div>
-          </Link>
+          </article>
         ))}
       </div>
     </div>
