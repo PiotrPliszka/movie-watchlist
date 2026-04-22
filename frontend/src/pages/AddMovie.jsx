@@ -19,6 +19,7 @@ export function AddMovie() {
     try {
       const response = await api.post("movies/", movie);
       console.log("Sukces: ", response.data);
+      resetForm();
     } catch (error) {
       if (error.response) {
         console.error("Dane błędu: ", error.response.data);
@@ -28,11 +29,23 @@ export function AddMovie() {
     }
   }
 
+  function resetForm() {
+    setMovie({
+      title: "",
+      description: "",
+      release_year: "",
+      is_watched: false,
+    });
+  }
+
   return (
     <div className="form-container">
       <div className="form-topbar">
         <Link to="/" className="home-btn">
           Home
+        </Link>
+        <Link to={"/movies"} className="home-btn">
+          Movies
         </Link>
       </div>
       <form className="form">
