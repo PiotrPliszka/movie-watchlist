@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 
 export function MovieList() {
   // dynamic data from database
+  const [movieToDelete, setMovieToDelete] = useState(null);
   const [movies, setMovies] = useState([]);
+  const movieToBeDeleted = movies.find((movie) => movie.id === movieToDelete);
 
   // useEffect
   useEffect(() => {
@@ -40,6 +42,17 @@ export function MovieList() {
         console.error(error.message);
       }
     }
+  }
+
+  function handleConfirmDelete() {
+    if (movieToDelete) {
+      deleteMovie(movieToDelete);
+      setMovieToDelete(null);
+    }
+  }
+
+  function handleCancelDelete() {
+    setMovieToDelete(null);
   }
 
   return (
@@ -84,7 +97,7 @@ export function MovieList() {
                 className="del-btn"
                 onClick={(e) => {
                   e.preventDefault();
-                  deleteMovie(item.id);
+                  setMovieToDelete(item.id);
                 }}
               >
                 🗑️
@@ -93,6 +106,23 @@ export function MovieList() {
           </article>
         ))}
       </div>
+
+      {movieToDelete && (
+        <div className="dialog-overlay">
+          <div className="dialog-box">
+            <h3>Czy na pewno chcesz usunąć {movieToBeDeleted.title}?</h3>
+            <p>Tej akcji nie można cofnąć.</p>
+            <div className="dialog-actions">
+              <button onClick={handleCancelDelete} className="cancel-btn">
+                Anuluj
+              </button>
+              <button onClick={handleConfirmDelete} className="confirm-del-btn">
+                Tak, usuń
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

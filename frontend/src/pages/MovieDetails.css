@@ -35,7 +35,7 @@
 
 .movie-container .top-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
 }
@@ -51,17 +51,27 @@
   margin: 0;
   font-size: inherit;
   line-height: 1.06;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .movie-container .btn {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 4px;
+  margin: 0;
+  padding: 0;
   justify-content: flex-end;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .movie-container .btn a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
   padding: 10px 16px;
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -79,6 +89,10 @@
   transform: translateY(-1px);
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(56, 189, 248, 0.22);
+}
+
+.movie-container .btn a:active {
+  transform: translateY(0);
 }
 
 .movie-container .meta {
@@ -111,6 +125,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
   padding: 18px 18px 16px;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 640px) {
@@ -122,9 +137,16 @@
   .movie-container .top-row {
     flex-direction: column;
     gap: 10px;
+    align-items: stretch;
   }
 
   .movie-container .btn {
-    justify-content: flex-start;
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .movie-container .btn a {
+    flex: 1 1 100%;
+    width: 100%;
   }
 }

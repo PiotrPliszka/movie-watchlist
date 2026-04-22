@@ -17,9 +17,21 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(520px 260px at 10% 15%, rgba(251, 113, 133, 0.16), transparent 60%),
-    radial-gradient(560px 300px at 90% 10%, rgba(249, 115, 22, 0.12), transparent 60%),
-    radial-gradient(680px 340px at 50% 115%, rgba(56, 189, 248, 0.1), transparent 62%);
+    radial-gradient(
+      520px 260px at 10% 15%,
+      rgba(251, 113, 133, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(
+      560px 300px at 90% 10%,
+      rgba(249, 115, 22, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      680px 340px at 50% 115%,
+      rgba(56, 189, 248, 0.1),
+      transparent 62%
+    );
   opacity: 0.9;
 }
 
@@ -123,7 +135,11 @@
   justify-content: space-between;
   gap: 20px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.03)
+    ),
     rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -137,7 +153,11 @@
 .card:hover {
   transform: translateY(-3px);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.035)),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.035)
+    ),
     rgba(255, 255, 255, 0.025);
   border-color: rgba(251, 113, 133, 0.2);
   box-shadow:
@@ -264,5 +284,191 @@
 
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Lekko przyciemnione tło */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog-box {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Możesz ostylować przyciski według własnego gustu */
+.confirm-del-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Dialog refresh: override old modal styles with the current visual language */
+.dialog-overlay {
+  inset: 0;
+  padding: 20px;
+  background:
+    radial-gradient(
+      560px 280px at 20% 15%,
+      rgba(251, 113, 133, 0.12),
+      transparent 64%
+    ),
+    radial-gradient(
+      560px 280px at 85% 10%,
+      rgba(56, 189, 248, 0.1),
+      transparent 64%
+    ),
+    rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.dialog-box {
+  width: min(520px, calc(100vw - 24px));
+  padding: 28px 26px 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.03)
+    ),
+    rgba(15, 23, 42, 0.92);
+  box-shadow:
+    0 30px 80px rgba(2, 6, 23, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  animation: modalEnter 180ms ease-out;
+}
+
+.dialog-box h3 {
+  margin: 0 0 10px;
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+.dialog-box p {
+  margin: 0;
+  color: rgba(203, 213, 225, 0.9);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.dialog-actions {
+  gap: 12px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.confirm-del-btn {
+  min-width: 140px;
+  border: 1px solid rgba(251, 113, 133, 0.28);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(251, 113, 133, 0.94),
+      rgba(239, 68, 68, 0.94)
+    );
+  color: #fff7ed;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.confirm-del-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+  box-shadow: 0 14px 32px rgba(239, 68, 68, 0.28);
+}
+
+.cancel-btn {
+  min-width: 120px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.cancel-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .dialog-overlay {
+    padding: 14px;
+  }
+
+  .dialog-box {
+    padding: 22px 16px 18px;
+    border-radius: 16px;
+  }
+
+  .dialog-actions {
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .confirm-del-btn,
+  .cancel-btn {
+    width: 100%;
   }
 }
