@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import "./AddMovie.css";
 
 export function AddMovie() {
+  const navigate = useNavigate();
+  const [error, setError] = useState({ titleError: "", dateError: "" });
   const [movie, setMovie] = useState({
     title: "",
     description: "",
@@ -16,10 +18,27 @@ export function AddMovie() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
+    const nextErrors = { titleError: "", dateError: "" };
+
+    if (movie.title.length < 3) {
+      nextErrors.titleError = "Title is too short";
+    }
+
+    if (movie.release_year === "") {
+      nextErrors.dateError = "You must set date";
+    }
+
+    if (nextErrors.titleError || nextErrors.dateError) {
+      setError(nextErrors);
+      return;
+    }
+
+    setError({ titleError: "", dateError: "" });
+
     try {
       const response = await api.post("movies/", movie);
-      console.log("Sukces: ", response.data);
       resetForm();
+      navigate("/movies");
     } catch (error) {
       if (error.response) {
         console.error("Dane błędu: ", error.response.data);
@@ -48,7 +67,7 @@ export function AddMovie() {
           Movies
         </Link>
       </div>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <label>Title</label>
         <input
           type="text"
@@ -56,6 +75,9 @@ export function AddMovie() {
           value={movie.title}
           name="title"
         />
+        {error.titleError && (
+          <p className="form-error">{error.titleError}</p>
+        )}
         <label>Description</label>
         <textarea
           className="description-input"
@@ -76,6 +98,7 @@ export function AddMovie() {
           value={movie.release_year}
           name="release_year"
         />
+        {error.dateError && <p className="form-error">{error.dateError}</p>}
         <label>Is watched</label>
         <label className="watched-row">
           <input
@@ -88,9 +111,7 @@ export function AddMovie() {
           />
           <span>Mark as watched</span>
         </label>
-        <button type="submit" onClick={handleSubmit}>
-          ADD
-        </button>
+        <button type="submit">ADD</button>
       </form>
     </div>
   );
