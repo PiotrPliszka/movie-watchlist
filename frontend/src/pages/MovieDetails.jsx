@@ -40,6 +40,7 @@ export function MovieDetails() {
           <div className="btn">
             <Link to={"/"}>Home</Link>
             <Link to={"/movies"}>Movie List</Link>
+            <Link to={`/movies/${id}/edit`}>Edit</Link>
           </div>
         </div>
         <div className="meta">{movieDetails.release_year}</div>
