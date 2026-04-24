@@ -1,15 +1,3 @@
-import os
-from datetime import date
-
-import django
-
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()
-
-from movies.models import Movie  # noqa: E402
-
-
 TEST_MOVIES = [
     {
         "title": "Inception",
@@ -42,30 +30,3 @@ TEST_MOVIES = [
         "is_watched": False,
     },
 ]
-
-
-def seed_movies():
-    created = 0
-    updated = 0
-
-    for item in TEST_MOVIES:
-        movie, was_created = Movie.objects.update_or_create(
-            title=item["title"],
-            defaults={
-                "description": item["description"],
-                "release_year": item["release_year"],
-                "is_watched": item["is_watched"],
-            },
-        )
-        if was_created:
-            created += 1
-            print(f"[CREATED] {movie.title}")
-        else:
-            updated += 1
-            print(f"[UPDATED] {movie.title}")
-
-    print(f"\nDone. Created: {created}, Updated: {updated}, Total in DB: {Movie.objects.count()}")
-
-
-if __name__ == "__main__":
-    seed_movies()
