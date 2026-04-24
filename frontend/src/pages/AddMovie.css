@@ -196,6 +196,14 @@ a {
   line-height: 1.2;
 }
 
+.form .form-error {
+  margin: -4px 0 4px;
+  color: #fda4af;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .form button {
   margin-top: 10px;
   border: 0;

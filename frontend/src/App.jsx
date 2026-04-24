@@ -4,6 +4,7 @@ import { MovieList } from "./pages/MovieList";
 import { HomePage } from "./pages/HomePage";
 import { MovieDetails } from "./pages/MovieDetails";
 import { AddMovie } from "./pages/AddMovie";
+import { EditMovie } from "./pages/EditMovie";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/movies" element={<MovieList />} />
       <Route path="/movies/:id" element={<MovieDetails />} />
+      <Route path="/movies/:id/edit" element={<EditMovie />} />
       <Route path="/movies/add-movie" element={<AddMovie />} />
     </Routes>
   );

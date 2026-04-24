@@ -1,18 +1,36 @@
-import React from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "./EditMovie.css";
 import api from "../api/axios";
-import "./AddMovie.css";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
-export function AddMovie() {
+export function EditMovie() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [error, setError] = useState({ titleError: "", dateError: "" });
   const [movie, setMovie] = useState({
+    id: "",
     title: "",
     description: "",
     release_year: "",
     is_watched: false,
   });
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get(`movies/${id}/`);
+        setMovie(response.data);
+        console.log("Sukces: ", response.data);
+      } catch (error) {
+        if (error.response) {
+          console.error(error.response.data);
+        } else {
+          console.error(error.message);
+        }
+      }
+    }
+    fetchData();
+  }, [id]);
+
   function handleChange(e) {
     setMovie({ ...movie, [e.target.name]: e.target.value });
   }
@@ -36,25 +54,15 @@ export function AddMovie() {
     setError({ titleError: "", dateError: "" });
 
     try {
-      const response = await api.post("movies/", movie);
-      resetForm();
+      const response = await api.patch(`movies/${id}/`, movie);
       navigate("/movies");
     } catch (error) {
       if (error.response) {
-        console.error("Dane błędu: ", error.response.data);
+        console.error(error.response.data);
       } else {
-        console.error("Bład ogólny: ", error.message);
+        console.error(error.message);
       }
     }
-  }
-
-  function resetForm() {
-    setMovie({
-      title: "",
-      description: "",
-      release_year: "",
-      is_watched: false,
-    });
   }
 
   return (
@@ -75,9 +83,7 @@ export function AddMovie() {
           value={movie.title}
           name="title"
         />
-        {error.titleError && (
-          <p className="form-error">{error.titleError}</p>
-        )}
+        {error.titleError && <p className="form-error">{error.titleError}</p>}
         <label>Description</label>
         <textarea
           className="description-input"
@@ -111,7 +117,7 @@ export function AddMovie() {
           />
           <span>Mark as watched</span>
         </label>
-        <button type="submit">ADD</button>
+        <button type="submit">EDIT</button>
       </form>
     </div>
   );

@@ -8,6 +8,8 @@ export function MovieList() {
   const [movieToDelete, setMovieToDelete] = useState(null);
   const [movies, setMovies] = useState([]);
   const movieToBeDeleted = movies.find((movie) => movie.id === movieToDelete);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   // useEffect
   useEffect(() => {
@@ -55,12 +57,61 @@ export function MovieList() {
     setMovieToDelete(null);
   }
 
+  const filteredMovies = movies
+    .filter((movie) =>
+      movie.title.toLowerCase().includes(search.toLowerCase()),
+    )
+    .filter((movie) => {
+      if (statusFilter === "watched") {
+        return movie.is_watched;
+      }
+
+      if (statusFilter === "unwatched") {
+        return !movie.is_watched;
+      }
+
+      return true;
+    });
+
   return (
     <div className="movie-list-div">
       <div className="nav">
         <h1>
           <Link to={"/"}>MovieList</Link>
         </h1>
+        <input
+          type="text"
+          placeholder="Search by title..."
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+        />
+        <div className="filter-switch">
+          <button
+            type="button"
+            className={statusFilter === "all" ? "filter-btn active" : "filter-btn"}
+            onClick={() => setStatusFilter("all")}
+          >
+            All
+          </button>
+          <button
+            type="button"
+            className={
+              statusFilter === "watched" ? "filter-btn active" : "filter-btn"
+            }
+            onClick={() => setStatusFilter("watched")}
+          >
+            Watched
+          </button>
+          <button
+            type="button"
+            className={
+              statusFilter === "unwatched" ? "filter-btn active" : "filter-btn"
+            }
+            onClick={() => setStatusFilter("unwatched")}
+          >
+            Unwatched
+          </button>
+        </div>
         <Link to={"add-movie"} className="add-btn">
           Add
         </Link>
@@ -71,11 +122,11 @@ export function MovieList() {
           <p className="eyebrow">Library</p>
           <h2>Your movies</h2>
         </div>
-        <div className="movie-count">{movies.length} titles</div>
+        <div className="movie-count">{filteredMovies.length} titles</div>
       </div>
 
       <div className="grid">
-        {movies.map((item) => (
+        {filteredMovies.map((item) => (
           <article className="card" key={item.id}>
             <Link to={`${item.id}`} className="card-link">
               <div className="data">
