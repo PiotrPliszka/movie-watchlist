@@ -5,11 +5,13 @@ import { HomePage } from "./pages/HomePage";
 import { MovieDetails } from "./pages/MovieDetails";
 import { AddMovie } from "./pages/AddMovie";
 import { EditMovie } from "./pages/EditMovie";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/404" element={<NotFound />} />
       <Route path="/movies" element={<MovieList />} />
       <Route path="/movies/:id" element={<MovieDetails />} />
       <Route path="/movies/:id/edit" element={<EditMovie />} />

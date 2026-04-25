@@ -6,7 +6,9 @@ import "./AddMovie.css";
 
 export function AddMovie() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ titleError: "", dateError: "" });
+  const [apiError, setApiError] = useState("");
   const [movie, setMovie] = useState({
     title: "",
     description: "",
@@ -34,17 +36,22 @@ export function AddMovie() {
     }
 
     setError({ titleError: "", dateError: "" });
+    setApiError("");
 
+    setIsLoading(true);
     try {
       const response = await api.post("movies/", movie);
       resetForm();
       navigate("/movies");
     } catch (error) {
+      setApiError("Wystąpił błąd serwera. Nie udało się dodać filmu.");
       if (error.response) {
         console.error("Dane błędu: ", error.response.data);
       } else {
         console.error("Bład ogólny: ", error.message);
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -68,6 +75,7 @@ export function AddMovie() {
         </Link>
       </div>
       <form className="form" onSubmit={handleSubmit}>
+        {apiError && <p className="api-error">{apiError}</p>}
         <label>Title</label>
         <input
           type="text"
@@ -75,9 +83,7 @@ export function AddMovie() {
           value={movie.title}
           name="title"
         />
-        {error.titleError && (
-          <p className="form-error">{error.titleError}</p>
-        )}
+        {error.titleError && <p className="form-error">{error.titleError}</p>}
         <label>Description</label>
         <textarea
           className="description-input"
@@ -111,7 +117,9 @@ export function AddMovie() {
           />
           <span>Mark as watched</span>
         </label>
-        <button type="submit">ADD</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "ADDING..." : "ADD"}
+        </button>
       </form>
     </div>
   );

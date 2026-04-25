@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../api/axios";
 import "./MovieDetails.css";
@@ -7,6 +7,8 @@ import "./MovieDetails.css";
 export function MovieDetails() {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+  const [apiError, setApiError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -15,6 +17,13 @@ export function MovieDetails() {
         console.log("Sukces: ", response.data);
         setMovieDetails(response.data);
       } catch (error) {
+        if (error.response && error.response.status === 404) {
+          navigate("/404");
+          return;
+        }
+        setApiError(
+          "Wystąpił nieoczekiwany błąd. Nie udało się załadować filmu.",
+        );
         if (error.response) {
           console.error("Dane błędu: ", error.response.data);
         } else {
@@ -26,6 +35,14 @@ export function MovieDetails() {
     fetchData();
   }, [id]);
 
+  if (apiError) {
+    return (
+      <div>
+        <p>{apiError}</p>
+        <Link to={"/movies"}>Wróć do listy filmów</Link>
+      </div>
+    );
+  }
   if (!movieDetails) {
     return <div className="movie-container">Ładowanie danych filmu...</div>;
   }
