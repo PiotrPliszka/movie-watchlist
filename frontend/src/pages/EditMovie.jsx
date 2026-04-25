@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import "./EditMovie.css";
 import api from "../api/axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
 export function EditMovie() {
+  const [isFetching, setIsFetching] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
   const [error, setError] = useState({ titleError: "", dateError: "" });
@@ -14,6 +17,7 @@ export function EditMovie() {
     release_year: "",
     is_watched: false,
   });
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -21,11 +25,14 @@ export function EditMovie() {
         setMovie(response.data);
         console.log("Sukces: ", response.data);
       } catch (error) {
+        setApiError("Nie udało się pobrać danych filmu.");
         if (error.response) {
           console.error(error.response.data);
         } else {
           console.error(error.message);
         }
+      } finally {
+        setIsFetching(false);
       }
     }
     fetchData();
@@ -52,17 +59,26 @@ export function EditMovie() {
     }
 
     setError({ titleError: "", dateError: "" });
+    setApiError("");
 
+    setIsSubmitting(true);
     try {
       const response = await api.patch(`movies/${id}/`, movie);
       navigate("/movies");
     } catch (error) {
+      setApiError("Wystąpił błąd podczas zapisywania zmian. Spróbuj ponownie.");
       if (error.response) {
         console.error(error.response.data);
       } else {
         console.error(error.message);
       }
+    } finally {
+      setIsSubmitting(false);
     }
+  }
+
+  if (isFetching) {
+    return <div className="form-container">Loading movie data...</div>;
   }
 
   return (
@@ -76,6 +92,7 @@ export function EditMovie() {
         </Link>
       </div>
       <form className="form" onSubmit={handleSubmit}>
+        {apiError && <p className="form-error">{apiError}</p>}
         <label>Title</label>
         <input
           type="text"
@@ -117,7 +134,9 @@ export function EditMovie() {
           />
           <span>Mark as watched</span>
         </label>
-        <button type="submit">EDIT</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Saving..." : "Edit"}
+        </button>
       </form>
     </div>
   );

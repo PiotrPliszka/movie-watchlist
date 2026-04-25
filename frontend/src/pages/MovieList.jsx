@@ -10,6 +10,7 @@ export function MovieList() {
   const movieToBeDeleted = movies.find((movie) => movie.id === movieToDelete);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [apiError, setApiError] = useState("");
 
   // useEffect
   useEffect(() => {
@@ -19,6 +20,7 @@ export function MovieList() {
         console.log("Sukces:", response.data);
         setMovies(response.data);
       } catch (error) {
+        setApiError("Nie udało się pobrać biblioteki filmów.");
         if (error.response) {
           console.error("Dane błędu: ", error.response.data);
         } else {
@@ -31,6 +33,7 @@ export function MovieList() {
   }, []);
 
   async function deleteMovie(id) {
+    setApiError("");
     try {
       const response = await api.delete(`movies/${id}/`);
       console.log("Sukces: ", response.data);
@@ -38,6 +41,7 @@ export function MovieList() {
       const refresh = movies.filter((movie) => movie.id != id);
       setMovies(refresh);
     } catch (error) {
+      setApiError("Nie udało się usunąć wybranego filmu.");
       if (error.response) {
         console.error(error.response.data);
       } else {
@@ -58,9 +62,7 @@ export function MovieList() {
   }
 
   const filteredMovies = movies
-    .filter((movie) =>
-      movie.title.toLowerCase().includes(search.toLowerCase()),
-    )
+    .filter((movie) => movie.title.toLowerCase().includes(search.toLowerCase()))
     .filter((movie) => {
       if (statusFilter === "watched") {
         return movie.is_watched;
@@ -88,7 +90,9 @@ export function MovieList() {
         <div className="filter-switch">
           <button
             type="button"
-            className={statusFilter === "all" ? "filter-btn active" : "filter-btn"}
+            className={
+              statusFilter === "all" ? "filter-btn active" : "filter-btn"
+            }
             onClick={() => setStatusFilter("all")}
           >
             All
@@ -121,6 +125,7 @@ export function MovieList() {
         <div>
           <p className="eyebrow">Library</p>
           <h2>Your movies</h2>
+          {apiError && <p className="api-error">{apiError}</p>}
         </div>
         <div className="movie-count">{filteredMovies.length} titles</div>
       </div>
