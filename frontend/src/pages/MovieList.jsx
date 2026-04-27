@@ -131,6 +131,9 @@ export function MovieList() {
       </div>
 
       <div className="grid">
+        {movies.length == 0 && (
+          <p className="empty-movie-list">List is empty add some movies</p>
+        )}
         {filteredMovies.map((item) => (
           <article className="card" key={item.id}>
             <Link to={`${item.id}`} className="card-link">
