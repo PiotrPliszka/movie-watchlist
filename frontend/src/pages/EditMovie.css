@@ -1,7 +1,22 @@
-.form .form-error {
-  margin: -4px 0 4px;
-  color: #fda4af;
-  font-size: 0.85rem;
-  font-weight: 700;
-  line-height: 1.35;
+@import "./AddMovie.css";
+
+.form-container {
+  width: min(900px, var(--page-width, calc(100vw - 32px)));
+}
+
+.form button {
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, 0.96),
+    rgba(249, 115, 22, 0.96)
+  );
+  box-shadow:
+    0 16px 34px rgba(56, 189, 248, 0.2),
+    0 10px 24px rgba(249, 115, 22, 0.18);
+}
+
+.form button:hover {
+  box-shadow:
+    0 20px 40px rgba(56, 189, 248, 0.22),
+    0 14px 26px rgba(249, 115, 22, 0.2);
 }
