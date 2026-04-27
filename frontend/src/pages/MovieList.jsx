@@ -4,7 +4,6 @@ import "./MovieList.css";
 import { Link } from "react-router-dom";
 
 export function MovieList() {
-  // dynamic data from database
   const [movieToDelete, setMovieToDelete] = useState(null);
   const [movies, setMovies] = useState([]);
   const movieToBeDeleted = movies.find((movie) => movie.id === movieToDelete);
@@ -12,19 +11,17 @@ export function MovieList() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [apiError, setApiError] = useState("");
 
-  // useEffect
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await api.get("movies/");
-        console.log("Sukces:", response.data);
         setMovies(response.data);
       } catch (error) {
-        setApiError("Nie udało się pobrać biblioteki filmów.");
+        setApiError("Failed to download movie library");
         if (error.response) {
-          console.error("Dane błędu: ", error.response.data);
+          console.error("Error data: ", error.response.data);
         } else {
-          console.log("Błąd ogólny: ", error.message);
+          console.log("Error message: ", error.message);
         }
       }
     }
@@ -36,12 +33,11 @@ export function MovieList() {
     setApiError("");
     try {
       const response = await api.delete(`movies/${id}/`);
-      console.log("Sukces: ", response.data);
 
       const refresh = movies.filter((movie) => movie.id != id);
       setMovies(refresh);
     } catch (error) {
-      setApiError("Nie udało się usunąć wybranego filmu.");
+      setApiError("Failed to delete selected movie");
       if (error.response) {
         console.error(error.response.data);
       } else {
@@ -169,14 +165,14 @@ export function MovieList() {
       {movieToDelete && (
         <div className="dialog-overlay">
           <div className="dialog-box">
-            <h3>Czy na pewno chcesz usunąć {movieToBeDeleted.title}?</h3>
-            <p>Tej akcji nie można cofnąć.</p>
+            <h3>Are you sure you want to delete {movieToBeDeleted.title}?</h3>
+            <p>This action cannot be undone</p>
             <div className="dialog-actions">
               <button onClick={handleCancelDelete} className="cancel-btn">
-                Anuluj
+                Cancel
               </button>
               <button onClick={handleConfirmDelete} className="confirm-del-btn">
-                Tak, usuń
+                Yes, delete
               </button>
             </div>
           </div>
