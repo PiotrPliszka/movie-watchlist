@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export function MovieList() {
   const [movieToDelete, setMovieToDelete] = useState(null);
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const movieToBeDeleted = movies.find((movie) => movie.id === movieToDelete);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -23,6 +24,8 @@ export function MovieList() {
         } else {
           console.log("Error message: ", error.message);
         }
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -121,45 +124,50 @@ export function MovieList() {
         <div>
           <p className="eyebrow">Library</p>
           <h2>Your movies</h2>
-          {apiError && <p className="api-error">{apiError}</p>}
+          {!isLoading && apiError && <p className="api-error">{apiError}</p>}
         </div>
-        <div className="movie-count">{filteredMovies.length} titles</div>
+        <div className="movie-count">
+          {isLoading ? "Loading..." : `${filteredMovies.length} titles`}
+        </div>
       </div>
 
       <div className="grid">
-        {movies.length == 0 && (
+        {isLoading ? (
+          <p className="loading-state">Loading movie library...</p>
+        ) : movies.length === 0 ? (
           <p className="empty-movie-list">List is empty add some movies</p>
-        )}
-        {filteredMovies.map((item) => (
-          <article className="card" key={item.id}>
-            <Link to={`${item.id}`} className="card-link">
-              <div className="data">
-                <div className="title">{item.title}</div>
-                <div className="meta">
-                  <span>{item.release_year}</span>
-                  <span
-                    className={
-                      item.is_watched ? "status watched" : "status pending"
-                    }
-                  >
-                    {item.is_watched ? "Watched" : "To watch"}
-                  </span>
+        ) : (
+          filteredMovies.map((item) => (
+            <article className="card" key={item.id}>
+              <Link to={`${item.id}`} className="card-link">
+                <div className="data">
+                  <div className="title">{item.title}</div>
+                  <div className="meta">
+                    <span>{item.release_year}</span>
+                    <span
+                      className={
+                        item.is_watched ? "status watched" : "status pending"
+                      }
+                    >
+                      {item.is_watched ? "Watched" : "To watch"}
+                    </span>
+                  </div>
                 </div>
+              </Link>
+              <div className="card-actions">
+                <button
+                  className="del-btn"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMovieToDelete(item.id);
+                  }}
+                >
+                  🗑️
+                </button>
               </div>
-            </Link>
-            <div className="card-actions">
-              <button
-                className="del-btn"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setMovieToDelete(item.id);
-                }}
-              >
-                🗑️
-              </button>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))
+        )}
       </div>
 
       {movieToDelete && (

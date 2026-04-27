@@ -236,6 +236,26 @@
   line-height: 1.6;
 }
 
+.loading-state {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 28px 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(56, 189, 248, 0.08),
+      rgba(255, 255, 255, 0.03)
+    ),
+    rgba(255, 255, 255, 0.02);
+  color: #dbeafe;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
 .data {
   width: 100%;
 }
