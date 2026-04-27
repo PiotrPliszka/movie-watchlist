@@ -1,33 +1,49 @@
 # Movie Watchlist
 
-A full-stack training project for managing a personal movie watchlist.
-Frontend is built with React + Vite, backend with Django REST Framework.
+Full-stack CRUD app for managing a personal movie watchlist.
+
+The project was built with React + Vite on the frontend and Django REST Framework on the backend. It allows users to browse movies, open details, add new entries, edit existing ones, delete records, and filter the collection in a simple responsive interface.
+
+## Features
+
+- Browse the full movie collection
+- Open movie details on a dedicated page
+- Add a new movie with basic client-side validation
+- Edit an existing movie
+- Delete a movie with a confirmation modal
+- Search movies by title
+- Filter movies by status: `all`, `watched`, `unwatched`
+- Show loading, empty, and no-results states
+- Display success notifications for key actions
+- Use a REST API for create, read, update, and delete operations
 
 ## Tech Stack
 
-- Frontend: React 19, Vite, React Router, Axios
+- Frontend: React 19, Vite, React Router, Axios, React Hot Toast
 - Backend: Django 6, Django REST Framework
 - Database: SQLite
-- Containerization: Docker, Docker Compose
-
-## What You Can Do
-
-- Browse all movies
-- Open details for a selected movie
-- Add a new movie
-- Update and delete movie records through the API
+- Tooling: ESLint, Docker, Docker Compose
 
 ## Project Structure
 
 ```text
 movie-watchlist/
 |- backend/            # Django + DRF API
-|- frontend/           # React app
-|- docker-compose.yml  # Local container setup
+|- frontend/           # React application
+|- docker-compose.yml
 `- README.md
 ```
 
-## API Overview
+## Frontend Routes
+
+- `/` - home page
+- `/movies` - movie list
+- `/movies/:id` - movie details
+- `/movies/:id/edit` - edit movie form
+- `/movies/add-movie` - add movie form
+- `/404` - fallback page
+
+## API
 
 Base URL:
 
@@ -37,70 +53,49 @@ http://localhost:8000/api/
 
 Endpoints:
 
-- `GET /movies/` - list movies
-- `POST /movies/` - create movie
-- `GET /movies/<id>/` - movie details
+- `GET /movies/` - list all movies
+- `POST /movies/` - create a movie
+- `GET /movies/<id>/` - retrieve movie details
 - `PUT /movies/<id>/` - full update
 - `PATCH /movies/<id>/` - partial update
-- `DELETE /movies/<id>/` - remove movie
+- `DELETE /movies/<id>/` - delete a movie
 
-Movie model fields:
+Movie fields:
 
-- `title` (string, required)
-- `description` (text)
-- `release_year` (date, `YYYY-MM-DD`)
-- `is_watched` (boolean)
+- `title` - string, required, minimum 3 characters
+- `description` - text, optional
+- `release_year` - date in `YYYY-MM-DD` format
+- `is_watched` - boolean
 
-## Frontend Routes
+## Running Locally
 
-- `/` - home page
-- `/movies` - movie list
-- `/movies/:id` - movie details
-- `/movies/add-movie` - add movie form
+### Requirements
 
-## Quick Start (Docker)
+- Python 3
+- Node.js and npm
 
-Requirements:
+### 1. Backend
 
-- Docker
-- Docker Compose
-
-Run:
-
-```bash
-docker compose up --build
-```
-
-App URLs:
-
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:8000/api/movies/`
-
-## Quick Start (Local Dev)
-
-### 1) Backend
-
-```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-```
-
-Create `.env` in project root (or update existing one):
+Create a `.env` file in the project root:
 
 ```env
 SECRET_KEY=your_secret_key_here
 ```
 
-Run migrations and server:
+Install dependencies and start the server:
 
 ```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
 
-### 2) Frontend
+### 2. Frontend
+
+Install dependencies and start the app:
 
 ```bash
 cd frontend
@@ -108,70 +103,49 @@ npm install
 npm run dev
 ```
 
+App URLs:
+
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:8000/api/movies/`
+
+## Running With Docker
+
+```bash
+docker compose up --build
+```
+
+## Available Scripts
+
+Frontend:
+
+```bash
+npm run dev
+npm run build
+npm run lint
+```
+
+Backend:
+
+```bash
+python manage.py runserver
+python manage.py test
+```
+
+## Testing
+
+Backend API tests currently cover:
+
+- `GET /movies/`
+- `POST /movies/`
+- `PATCH /movies/<id>/`
+- `DELETE /movies/<id>/`
+
 ## Notes
 
-- Frontend API client points to `http://localhost:8000/api/` (`frontend/src/api/axios.js`).
-- If CORS issues appear in local setup, verify backend CORS settings.
-- Current focus of this project is API + routing practice, without auth.
+- Frontend API requests use `http://localhost:8000/api/` from `frontend/src/api/axios.js`
+- The app currently uses local SQLite storage
+- Authentication is not included in this project
 
-## Development Roadmap
+## Author
 
-Below is a practical roadmap for turning this project into a solid portfolio-ready CRUD application.
-
-### Stage 1 - Core CRUD Completion
-
-1. Finish the full `AddMovie` flow with working submit, validation, and redirect after success.
-2. Add an `EditMovie` page with prefilled form data and update support.
-3. Add a quick `watched / not watched` toggle from the UI.
-4. Improve the delete flow with a better confirmation modal and clean refresh behavior.
-
-### Stage 2 - UX and Form Quality
-
-5. Add loading states for list, details, and form submission.
-6. Add user-friendly error states for failed API requests.
-7. Add success feedback after create and update actions.
-8. Add empty states when the database has no movies.
-
-### Stage 3 - Better Movie Browsing
-
-9. Add search by movie title.
-10. Add filters such as `all`, `watched`, and `to watch`.
-11. Add sorting by title or release date.
-12. Improve the visual presentation of status, dates, and metadata.
-
-### Stage 4 - Codebase Cleanup
-
-13. Extract reusable UI parts such as buttons, modals, badges, and headers.
-14. Clean up CSS naming to avoid collisions between pages.
-15. Reduce duplicated layout and styling patterns across the frontend.
-
-### Stage 5 - Backend Improvements
-
-16. Improve serializer validation and API responses.
-17. Add filtering and sorting support through query parameters.
-18. Revisit model naming and field choices if needed.
-19. Keep seed/test data as an official part of developer setup.
-
-### Stage 6 - Testing
-
-20. Add backend tests for `GET`, `POST`, `PATCH`, and `DELETE` movie endpoints.
-21. Add frontend tests for critical flows such as listing, opening details, adding, and deleting.
-
-### Stage 7 - Portfolio Polish
-
-22. Add screenshots or GIF previews to the README.
-23. Keep the UI fully responsive on desktop and mobile.
-24. Clean up remaining small bugs, labels, and consistency issues.
-25. Treat this project as a finished portfolio piece, then move on to a second full-stack app.
-
-## Suggested Order of Work
-
-If you want to build this project in a smart order, focus on:
-
-1. Core CRUD completion
-2. Loading, error, and empty states
-3. Search, filters, and sorting
-4. CSS and component cleanup
-5. Backend filtering and validation
-6. Tests
-7. README polish and screenshots
+Personal learning project focused on CRUD, routing, API integration, and improving frontend UX in a full-stack setup.
