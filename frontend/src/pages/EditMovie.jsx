@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EditMovie.css";
 import api from "../api/axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
@@ -23,9 +23,8 @@ export function EditMovie() {
       try {
         const response = await api.get(`movies/${id}/`);
         setMovie(response.data);
-        console.log("Sukces: ", response.data);
       } catch (error) {
-        setApiError("Nie udało się pobrać danych filmu.");
+        setApiError("Failed to download movie data");
         if (error.response) {
           console.error(error.response.data);
         } else {
@@ -66,7 +65,7 @@ export function EditMovie() {
       const response = await api.patch(`movies/${id}/`, movie);
       navigate("/movies");
     } catch (error) {
-      setApiError("Wystąpił błąd podczas zapisywania zmian. Spróbuj ponownie.");
+      setApiError("There was an error saving changes. Please try again.");
       if (error.response) {
         console.error(error.response.data);
       } else {

@@ -21,7 +21,7 @@ export function HomePage() {
           sprawdzać szczegóły i rozwijać swoje umiejętności frontendowe.
         </p>
         <Link to={"/movies"} className="btn">
-          Przejdz do filmów
+          Move to movies
         </Link>
       </div>
     </div>

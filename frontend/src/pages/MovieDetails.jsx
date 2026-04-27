@@ -22,12 +22,12 @@ export function MovieDetails() {
           return;
         }
         setApiError(
-          "Wystąpił nieoczekiwany błąd. Nie udało się załadować filmu.",
+          "An unexpected error occurred. The video could not be loaded.",
         );
         if (error.response) {
-          console.error("Dane błędu: ", error.response.data);
+          console.error("Error data: ", error.response.data);
         } else {
-          console.error("Błąd Ogólny: ", error.message);
+          console.error("Error message: ", error.message);
         }
       }
     }
@@ -39,12 +39,12 @@ export function MovieDetails() {
     return (
       <div>
         <p>{apiError}</p>
-        <Link to={"/movies"}>Wróć do listy filmów</Link>
+        <Link to={"/movies"}>Back to movie list</Link>
       </div>
     );
   }
   if (!movieDetails) {
-    return <div className="movie-container">Ładowanie danych filmu...</div>;
+    return <div className="movie-container">Loading data...</div>;
   }
 
   return (

@@ -44,11 +44,11 @@ export function AddMovie() {
       resetForm();
       navigate("/movies");
     } catch (error) {
-      setApiError("Wystąpił błąd serwera. Nie udało się dodać filmu.");
+      setApiError("A server error occurred. Failed to add video.");
       if (error.response) {
-        console.error("Dane błędu: ", error.response.data);
+        console.error("Error data: ", error.response.data);
       } else {
-        console.error("Bład ogólny: ", error.message);
+        console.error("Error message: ", error.message);
       }
     } finally {
       setIsLoading(false);
