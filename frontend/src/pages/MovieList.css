@@ -205,10 +205,35 @@
   text-transform: uppercase;
 }
 
+.api-error {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(251, 113, 133, 0.12);
+  border: 1px solid rgba(251, 113, 133, 0.18);
+  color: #fecdd3;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 18px;
+}
+
+.empty-movie-list {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 28px 22px;
+  border-radius: 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .data {

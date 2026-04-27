@@ -204,6 +204,18 @@ a {
   line-height: 1.35;
 }
 
+.form .api-error {
+  margin: 0 0 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(251, 113, 133, 0.12);
+  border: 1px solid rgba(251, 113, 133, 0.18);
+  color: #fecdd3;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .form button {
   margin-top: 10px;
   border: 0;
@@ -239,6 +251,16 @@ a {
 
 .form button:active {
   transform: translateY(0);
+}
+
+.form button:disabled {
+  cursor: wait;
+  opacity: 0.78;
+  filter: saturate(0.9);
+  transform: none;
+  box-shadow:
+    0 10px 24px rgba(244, 63, 94, 0.14),
+    0 8px 20px rgba(249, 115, 22, 0.12);
 }
 
 @media (max-width: 640px) {
