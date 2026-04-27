@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import api from "../api/axios";
 import "./AddMovie.css";
 
@@ -42,6 +43,7 @@ export function AddMovie() {
     try {
       const response = await api.post("movies/", movie);
       resetForm();
+      toast.success("Movie added successfully");
       navigate("/movies");
     } catch (error) {
       setApiError("A server error occurred. Failed to add video.");

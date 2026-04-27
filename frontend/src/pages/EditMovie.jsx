@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EditMovie.css";
 import api from "../api/axios";
+import toast from "react-hot-toast";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
 export function EditMovie() {
@@ -63,6 +64,7 @@ export function EditMovie() {
     setIsSubmitting(true);
     try {
       const response = await api.patch(`movies/${id}/`, movie);
+      toast.success("Movie edited successfully");
       navigate("/movies");
     } catch (error) {
       setApiError("There was an error saving changes. Please try again.");

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../api/axios";
+import toast from "react-hot-toast";
 import "./MovieList.css";
 import { Link } from "react-router-dom";
 
@@ -36,8 +37,8 @@ export function MovieList() {
     setApiError("");
     try {
       const response = await api.delete(`movies/${id}/`);
-
       const refresh = movies.filter((movie) => movie.id != id);
+      toast.success("Movie is deleted");
       setMovies(refresh);
     } catch (error) {
       setApiError("Failed to delete selected movie");
@@ -136,6 +137,10 @@ export function MovieList() {
           <p className="loading-state">Loading movie library...</p>
         ) : movies.length === 0 ? (
           <p className="empty-movie-list">List is empty add some movies</p>
+        ) : filteredMovies.length === 0 ? (
+          <p className="empty-movie-list">
+            No movies match your search or selected filters
+          </p>
         ) : (
           filteredMovies.map((item) => (
             <article className="card" key={item.id}>
