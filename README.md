@@ -1,8 +1,36 @@
 # Movie Watchlist
 
+![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
+![Django](https://img.shields.io/badge/Django-6-092e20?logo=django&logoColor=white)
+![DRF](https://img.shields.io/badge/DRF-3.17-ff1709?logo=django&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-Database-003b57?logo=sqlite&logoColor=white)
+
 Full-stack CRUD app for managing a personal movie watchlist.
 
 The project was built with React + Vite on the frontend and Django REST Framework on the backend. It allows users to browse movies, open details, add new entries, edit existing ones, delete records, and filter the collection in a simple responsive interface.
+
+## Preview
+
+### Home Page
+
+![Home Page](docs/HomePage.png)
+
+### Movie List
+
+![Movie List](docs/MovieList.png)
+
+### Empty State
+
+![Empty State](docs/EmptyState.png)
+
+### Add Movie Form
+
+![Add Movie Form](docs/AddFrom.png)
+
+### Movie Details
+
+![Movie Details](docs/MovieDetails.png)
 
 ## Features
 
@@ -15,6 +43,8 @@ The project was built with React + Vite on the frontend and Django REST Framewor
 - Filter movies by status: `all`, `watched`, `unwatched`
 - Show loading, empty, and no-results states
 - Display success notifications for key actions
+- Show a custom 404 page for invalid routes
+- Use a responsive UI designed for desktop and mobile screens
 - Use a REST API for create, read, update, and delete operations
 
 ## Tech Stack
@@ -139,6 +169,16 @@ Backend API tests currently cover:
 - `POST /movies/`
 - `PATCH /movies/<id>/`
 - `DELETE /movies/<id>/`
+
+## What I Learned
+
+- Building a full CRUD flow between a React frontend and a Django REST API
+- Managing client-side routing with React Router
+- Handling form state, validation, loading states, and API errors in React
+- Designing reusable page layouts and responsive UI patterns
+- Working with REST endpoints for listing, creating, editing, and deleting data
+- Improving UX with empty states, confirmation dialogs, and toast notifications
+- Writing basic backend API tests with Django REST Framework
 
 ## Notes
 
